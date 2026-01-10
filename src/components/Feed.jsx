@@ -1,26 +1,28 @@
-import { useEffect } from 'react'
-import PostCard from './PostCard'
+import { useReducer } from 'react';
+import { feedReducer, initialState } from '../reducers/feedReducer';
+import PostCard from './PostCard';
+import CreatePostForm from './CreatePostForm';
 
-// On récupère 'posts' depuis les props
-function Feed({ posts }) {
-  
-  useEffect(() => {
-    document.title = `ReactBook | ${posts.length} Posts`
-  }, [posts.length]) // Se déclenche à chaque ajout de post
+function Feed() {
+  const [state, dispatch] = useReducer(feedReducer, initialState);
 
   return (
     <section>
       <h2>Fil d’actualité</h2>
-      {posts.map(post => (
-        <PostCard
-          key={post.id} // Important pour les performances
-          author={post.author}
-          content={post.content}
-          initialLikes={post.initialLikes}
-        />
+      <CreatePostForm dispatch={dispatch} />
+      {state.map(post => (
+        <div key={post.id} style={{ border: '1px solid #ddd', padding: '10px', margin: '5px' }}>
+          <PostCard {...post} />
+          <button onClick={() => dispatch({ type: 'TOGGLE_LIKE', id: post.id })}>
+            {post.liked ? '❤️ Aimé' : '🤍 J\'aime'}
+          </button>
+          <button onClick={() => dispatch({ type: 'DELETE_POST', id: post.id })} style={{ color: 'red' }}>
+            Supprimer
+          </button>
+        </div>
       ))}
     </section>
-  )
+  );
 }
 
-export default Feed
+export default Feed;
