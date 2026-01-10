@@ -1,59 +1,32 @@
-import { useState } from 'react'
-import Header from './components/Header'
-import Feed from './components/Feed'
-import UserProfile from './components/UserProfile'
-import InputLogger from './components/InputLogger'
-import LoginForm from './components/LoginForm'
-import MessageBoard from './components/MessageBoard'
-
-// Imports des Contextes
-import { AuthProvider } from './context/AuthContext'
-import { ThemeProvider } from './context/ThemeContext'
+import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+import FeedPage from './pages/FeedPage';
+import LoginPage from './pages/LoginPage';
+import ProfilePage from './pages/ProfilePage';
+import Header from './components/Header';
+// Ajoute ces deux lignes en haut de App.jsx :
+import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
-  const [posts, setPosts] = useState([
-    { id: 1, author: 'Djab1', content: 'Premier poste', initialLikes: 5 },
-    { id: 2, author: 'Djab2', content: 'Bien joué', initialLikes: 2 }
-  ])
-
-  const handleAddPost = () => {
-    const newPost = {
-      id: Date.now(),
-      author: 'Utilisateur',
-      content: 'Nouveau message !',
-      initialLikes: 0
-    }
-    setPosts([newPost, ...posts])
-  }
-
   return (
     <AuthProvider>
       <ThemeProvider>
-        {/* On enveloppe tout le contenu pour que le Context soit accessible partout */}
-        <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+        <Header />
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
           
-          <Header onAddPost={handleAddPost} />
-          
-          {/* --- Partie 3 : Exercices --- */}
-          <section style={{ border: '2px dashed orange', margin: '20px 0', padding: '10px' }}>
-            <h2>Partie 3 : Événements et Formulaires</h2>
-            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-                <InputLogger />
-                <LoginForm />
-            </div>
-            <MessageBoard />
-          </section>
-
-          <UserProfile />
-          
-          {/* Note : Dans la suite du TP, le Feed utilisera peut-être 
-              son propre useReducer interne comme on a vu précédemment */}
-          <Feed posts={posts} />
-          
-        </div>
+          {/* Routes protégées (Question 9) */}
+          <Route path="/" element={
+            <ProtectedRoute> <FeedPage /> </ProtectedRoute>
+          } />
+          <Route path="/user/:username" element={
+            <ProtectedRoute> <ProfilePage /> </ProtectedRoute>
+          } />
+        </Routes>
       </ThemeProvider>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;
