@@ -2,10 +2,13 @@ import { useState } from 'react'
 import Header from './components/Header'
 import Feed from './components/Feed'
 import UserProfile from './components/UserProfile'
-// Import des nouveaux composants de la Partie 3
 import InputLogger from './components/InputLogger'
 import LoginForm from './components/LoginForm'
 import MessageBoard from './components/MessageBoard'
+
+// Imports des Contextes
+import { AuthProvider } from './context/AuthContext'
+import { ThemeProvider } from './context/ThemeContext'
 
 function App() {
   const [posts, setPosts] = useState([
@@ -24,23 +27,32 @@ function App() {
   }
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <Header onAddPost={handleAddPost} />
-      
-      {/* --- Partie 3 : Exercices --- */}
-      <section style={{ border: '2px dashed orange', margin: '20px 0', padding: '10px' }}>
-        <h2>Partie 3 : Événements et Formulaires</h2>
-        <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-            <InputLogger />
-            <LoginForm />
-        </div>
-        <MessageBoard />
-      </section>
-      {/* --------------------------- */}
+    <AuthProvider>
+      <ThemeProvider>
+        {/* On enveloppe tout le contenu pour que le Context soit accessible partout */}
+        <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+          
+          <Header onAddPost={handleAddPost} />
+          
+          {/* --- Partie 3 : Exercices --- */}
+          <section style={{ border: '2px dashed orange', margin: '20px 0', padding: '10px' }}>
+            <h2>Partie 3 : Événements et Formulaires</h2>
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                <InputLogger />
+                <LoginForm />
+            </div>
+            <MessageBoard />
+          </section>
 
-      <UserProfile />
-      <Feed posts={posts} />
-    </div>
+          <UserProfile />
+          
+          {/* Note : Dans la suite du TP, le Feed utilisera peut-être 
+              son propre useReducer interne comme on a vu précédemment */}
+          <Feed posts={posts} />
+          
+        </div>
+      </ThemeProvider>
+    </AuthProvider>
   )
 }
 
