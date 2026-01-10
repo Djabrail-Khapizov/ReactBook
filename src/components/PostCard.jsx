@@ -1,22 +1,29 @@
 import { useState } from 'react'
+// Importation de Link pour la navigation sans rechargement
+import { Link } from 'react-router-dom'
 
 function PostCard({ author, content, initialLikes }) {
-  // On crée un état local "likes" initialisé par la prop
   const [likes, setLikes] = useState(initialLikes)
 
   return (
-    <div style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
-      <p><strong>{author}</strong></p>
+    <div style={{ border: '1px solid #ccc', margin: '10px', padding: '10px', borderRadius: '8px' }}>
+      {/* Question 4 : L'auteur est maintenant un lien vers /user/[nom] */}
+      <p>
+        <strong>
+          <Link to={`/user/${author}`} style={{ textDecoration: 'none', color: '#3498db' }}>
+            {author}
+          </Link>
+        </strong>
+      </p>
+      
       <p>{content}</p>
       <p>❤️ {likes}</p>
 
-      {/* Utilisation de la forme fonctionnelle pour les clics rapides */}
       <button onClick={() => setLikes(prev => prev + 1)}>
         J’aime ❤️
       </button>
 
-      {/* Réinitialisation à la valeur initiale reçue en prop */}
-      <button onClick={() => setLikes(initialLikes)}>
+      <button onClick={() => setLikes(initialLikes)} style={{ marginLeft: '10px' }}>
         Réinitialiser
       </button>
     </div>
