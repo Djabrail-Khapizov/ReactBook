@@ -1,0 +1,241 @@
+body.light {
+  background-color: #f5f5f5;
+  color: black;
+}
+
+body.dark {
+  background-color: #121212;
+  color: white;
+}
+
+input, button {
+  background: inherit;
+  color: inherit;
+  border: 1px solid gray;
+  padding: 4px;
+}
+
+a {
+  color: inherit;
+}
+
+/* Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body.light {
+  background-color: #f5f8fa;
+  color: #0f1419;
+}
+
+body.dark {
+  background-color: #15202b;
+  color: #e1e8ed;
+}
+
+/* Header */
+header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e1e8ed;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.dark header {
+  background-color: #192734;
+  border-color: #38444d;
+}
+
+/* Feed container */
+.feed-container {
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+/* Barre de recherche */
+.feed-container > div:first-child {
+  margin-bottom: 15px;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.feed-container input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #e1e8ed;
+  border-radius: 25px;
+  font-size: 1rem;
+}
+
+body.dark .feed-container input {
+  background-color: #22303c;
+  border-color: #38444d;
+  color: #e1e8ed;
+}
+
+/* Create Post */
+.create-post {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1px solid #e1e8ed;
+  border-radius: 15px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+body.dark .create-post {
+  background-color: #192734;
+  border-color: #38444d;
+}
+
+.create-post input {
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #e1e8ed;
+  margin-bottom: 10px;
+}
+
+body.dark .create-post input {
+  background-color: #22303c;
+  border-color: #38444d;
+  color: #e1e8ed;
+}
+
+.create-post button {
+  align-self: flex-end;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 20px;
+  background-color: #1da1f2;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.create-post button:hover {
+  background-color: #0d8ddb;
+}
+
+/* PostCard */
+.post-card {
+  background-color: #ffffff;
+  border: 1px solid #e1e8ed;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  color: #0f1419;
+}
+
+body.dark .post-card {
+  background-color: #192734;
+  border-color: #38444d;
+  color: #e1e8ed;
+}
+
+.post-card strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.post-card p {
+  margin: 5px 0 10px 0;
+}
+
+/* Post buttons */
+.post-card button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 1px solid #e1e8ed;
+  background-color: #f5f8fa;
+  cursor: pointer;
+  font-weight: bold;
+  color: #0f1419;
+}
+
+body.dark .post-card button {
+  border-color: #38444d;
+  background-color: #22303c;
+  color: #e1e8ed;
+}
+
+.post-card button:hover {
+  background-color: #e8f5fd;
+}
+
+body.dark .post-card button:hover {
+  background-color: #1da1f2;
+  color: #ffffff;
+}
+
+/* Comment Section */
+.comment-section {
+  margin-top: 10px;
+  border-top: 1px solid #e1e8ed;
+  padding-top: 10px;
+}
+
+body.dark .comment-section {
+  border-color: #38444d;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.comment span {
+  flex: 1;
+}
+
+.comment button {
+  margin-left: 5px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
+  background-color: #f5f8fa;
+  cursor: pointer;
+  color: #0f1419;
+}
+
+body.dark .comment button {
+  border-color: #38444d;
+  background-color: #22303c;
+  color: #e1e8ed;
+}
+
+.comment button:hover {
+  background-color: #1da1f2;
+  color: #ffffff;
+}
+
+.comment input {
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid #e1e8ed;
+}
+
+body.dark .comment input {
+  background-color: #22303c;
+  border-color: #38444d;
+  color: #e1e8ed;
+}
+
+/* Inputs focus */
+input:focus {
+  outline: none;
+  border-color: #1da1f2;
+  box-shadow: 0 0 5px rgba(29,161,242,0.5);
+}

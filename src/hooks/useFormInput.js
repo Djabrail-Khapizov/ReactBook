@@ -1,15 +1,10 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-export function useFormInput(initialValue) {
+export default function useFormInput(initialValue) {
   const [value, setValue] = useState(initialValue);
 
-  function handleChange(e) {
-    setValue(e.target.value);
-  }
+  const onChange = (e) => setValue(e.target.value);
+  const reset = () => setValue(initialValue);
 
-  return {
-    value,
-    onChange: handleChange,
-    reset: () => setValue('') // Petit bonus pour vider le champ
-  };
+  return { value, onChange, reset };
 }

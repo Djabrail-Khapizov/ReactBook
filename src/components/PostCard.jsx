@@ -1,33 +1,24 @@
-import { useState } from 'react'
-// Importation de Link pour la navigation sans rechargement
-import { Link } from 'react-router-dom'
+import CommentSection from "./CommentSection";
 
-function PostCard({ author, content, initialLikes }) {
-  const [likes, setLikes] = useState(initialLikes)
-
+export default function PostCard({ post, dispatch }) {
   return (
-    <div style={{ border: '1px solid #ccc', margin: '10px', padding: '10px', borderRadius: '8px' }}>
-      {/* Question 4 : L'auteur est maintenant un lien vers /user/[nom] */}
-      <p>
-        <strong>
-          <Link to={`/user/${author}`} style={{ textDecoration: 'none', color: '#3498db' }}>
-            {author}
-          </Link>
-        </strong>
-      </p>
-      
-      <p>{content}</p>
-      <p>❤️ {likes}</p>
+    <div className="post-card">
+      <strong>{post.author}</strong>
+      <p>{post.content}</p>
 
-      <button onClick={() => setLikes(prev => prev + 1)}>
-        J’aime ❤️
+      <button onClick={() => dispatch({ type: "LIKE_POST", payload: post.id })}>
+        ❤️ {post.likes}
       </button>
 
-      <button onClick={() => setLikes(initialLikes)} style={{ marginLeft: '10px' }}>
-        Réinitialiser
+      <button onClick={() => dispatch({ type: "RESET_LIKES", payload: post.id })}>
+        🔄 Réinitialiser
       </button>
+
+      <button onClick={() => dispatch({ type: "DELETE_POST", payload: post.id })}>
+        🗑 Supprimer
+      </button>
+
+      <CommentSection post={post} dispatch={dispatch} />
     </div>
-  )
+  );
 }
-
-export default PostCard
