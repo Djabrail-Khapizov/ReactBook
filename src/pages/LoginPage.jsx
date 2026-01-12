@@ -10,8 +10,8 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   // Valeurs fixes
-  const VALID_EMAIL = "test@example.com";
-  const VALID_PASSWORD = "123456";
+  const VALID_EMAIL = "d@d.d";
+  const VALID_PASSWORD = "1234";
 
   const handleSubmit = (e) => {
     e.preventDefault();

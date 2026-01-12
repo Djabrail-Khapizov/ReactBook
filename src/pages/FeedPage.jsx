@@ -9,10 +9,24 @@ export default function FeedPage() {
 
   const [posts, dispatch] = useReducer(feedReducer, [
     {
-      id: Date.now(),
-      author: "Alice",
+      id: 1,
+      author: "Izuku",
       content: "Bienvenue sur ReactBook",
-      likes: 0,
+      likes: 2,
+      comments: []
+    },
+    {
+      id: 2,
+      author: "Bakugo",
+      content: "Bienvenue sur ReactBook",
+      likes: 6,
+      comments: []
+    },
+    {
+      id:3,
+      author: "Ochaco",
+      content: "Bienvenue sur ReactBook",
+      likes: 8,
       comments: []
     }
   ]);
