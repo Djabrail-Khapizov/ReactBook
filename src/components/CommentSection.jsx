@@ -17,10 +17,13 @@ export default function CommentSection({ post, dispatch }) {
   if (!post) return null;
 
   const toggleLike = (commentId) => {
-    setCommentLiked(prev => ({ ...prev, [commentId]: !prev[commentId] }));
+    const isLiked = commentLiked[commentId] || false; // fallback false
+    const currentLikes = commentLikes[commentId] || 0; // fallback 0
+
+    setCommentLiked(prev => ({ ...prev, [commentId]: !isLiked }));
     setCommentLikes(prev => ({
       ...prev,
-      [commentId]: prev[commentId] + (commentLiked[commentId] ? -1 : 1)
+      [commentId]: currentLikes + (!isLiked ? 1 : -1)
     }));
   };
 
@@ -56,7 +59,7 @@ export default function CommentSection({ post, dispatch }) {
             🗑
           </button>
 
-          {/* Like fictif */}
+          {/* Like fictif pour commentaire */}
           <button
             onClick={() => toggleLike(c.id)}
             style={{
