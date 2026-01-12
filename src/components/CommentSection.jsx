@@ -5,7 +5,24 @@ export default function CommentSection({ post, dispatch }) {
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState("");
 
+  // State global local pour les likes des commentaires
+  const initialLikes = {};
+  post.comments.forEach(c => {
+    if (!(c.id in initialLikes)) initialLikes[c.id] = c.likes || 0;
+  });
+
+  const [commentLikes, setCommentLikes] = useState(initialLikes);
+  const [commentLiked, setCommentLiked] = useState({}); // toggle par commentaire
+
   if (!post) return null;
+
+  const toggleLike = (commentId) => {
+    setCommentLiked(prev => ({ ...prev, [commentId]: !prev[commentId] }));
+    setCommentLikes(prev => ({
+      ...prev,
+      [commentId]: prev[commentId] + (commentLiked[commentId] ? -1 : 1)
+    }));
+  };
 
   const submit = e => {
     e.preventDefault();
@@ -18,23 +35,15 @@ export default function CommentSection({ post, dispatch }) {
     setText("");
   };
 
-  const saveEdit = (commentId) => {
-    if (!editText.trim()) return;
-
-    dispatch({
-      type: "EDIT_COMMENT",
-      payload: { postId: post.id, commentId, text: editText }
-    });
-
-    setEditingId(null);
-  };
-
   return (
     <div className="comment-section">
       {post.comments.map(c => (
         <div key={c.id} className="comment">
           {editingId === c.id ? (
-            <input value={editText} onChange={e => setEditText(e.target.value)} />
+            <input
+              value={editText}
+              onChange={e => setEditText(e.target.value)}
+            />
           ) : (
             <span>{c.text}</span>
           )}
@@ -47,13 +56,31 @@ export default function CommentSection({ post, dispatch }) {
             🗑
           </button>
 
-          <button onClick={() =>
-            dispatch({ type: "LIKE_COMMENT", payload: { postId: post.id, commentId: c.id } })
-          }>
-            ❤️ {c.likes}
+          {/* Like fictif */}
+          <button
+            onClick={() => toggleLike(c.id)}
+            style={{
+              backgroundColor: commentLiked[c.id] ? "#e0245e" : "#f5f8fa",
+              color: commentLiked[c.id] ? "#fff" : "#0f1419",
+              borderRadius: "8px",
+              padding: "3px 8px",
+              marginLeft: "5px",
+              border: "1px solid #e1e8ed",
+              cursor: "pointer"
+            }}
+          >
+            {commentLiked[c.id] ? "❤️ Aimé" : "🤍 Aimer"} {commentLikes[c.id]}
           </button>
 
-          {editingId === c.id && <button onClick={() => saveEdit(c.id)}>💾</button>}
+          {editingId === c.id && (
+            <button onClick={() => {
+              dispatch({
+                type: "EDIT_COMMENT",
+                payload: { postId: post.id, commentId: c.id, text: editText }
+              });
+              setEditingId(null);
+            }}>💾</button>
+          )}
         </div>
       ))}
 

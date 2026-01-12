@@ -2,18 +2,30 @@ import { useState } from "react";
 import CommentSection from "./CommentSection";
 
 export default function PostCard({ post, dispatch }) {
-  // toggle simple pour affichage
+  // état local pour toggle
   const [liked, setLiked] = useState(false);
-  const [retweeted, setRetweeted] = useState(false); // option retweet
+  const [likesCount, setLikesCount] = useState(post.likes || 3); // likes fictifs init
+  const [retweeted, setRetweeted] = useState(false);
+  const [retweetCount, setRetweetCount] = useState(post.retweets || 1); // retweets fictifs init
+
+  const toggleLike = () => {
+    setLiked(!liked);
+    setLikesCount(prev => liked ? prev - 1 : prev + 1);
+  };
+
+  const toggleRetweet = () => {
+    setRetweeted(!retweeted);
+    setRetweetCount(prev => retweeted ? prev - 1 : prev + 1);
+  };
 
   return (
     <div className="post-card">
       <strong>{post.author}</strong>
       <p>{post.content}</p>
 
-      {/* Aimer / Aimé */}
+      {/* Bouton Aimer */}
       <button
-        onClick={() => setLiked(!liked)}
+        onClick={toggleLike}
         style={{
           backgroundColor: liked ? "#e0245e" : "#f5f8fa",
           color: liked ? "#fff" : "#0f1419",
@@ -24,12 +36,12 @@ export default function PostCard({ post, dispatch }) {
           cursor: "pointer"
         }}
       >
-        {liked ? "❤️ Aimé" : "🤍 Aimer"}
+        {liked ? "❤️ Aimé" : "🤍 Aimer"} {likesCount}
       </button>
 
-      {/* Retweet affichage simple */}
+      {/* Bouton Retweeter */}
       <button
-        onClick={() => setRetweeted(!retweeted)}
+        onClick={toggleRetweet}
         style={{
           backgroundColor: retweeted ? "#17bf63" : "#f5f8fa",
           color: retweeted ? "#fff" : "#0f1419",
@@ -40,10 +52,10 @@ export default function PostCard({ post, dispatch }) {
           cursor: "pointer"
         }}
       >
-        {retweeted ? "🔁 Retweeté" : "🔁 Retweeter"}
+        {retweeted ? "🔁 Retweeté" : "🔁 Retweeter"} {retweetCount}
       </button>
 
-      {/* Supprimer post */}
+      {/* Supprimer */}
       <button
         onClick={() => dispatch({ type: "DELETE_POST", payload: post.id })}
         style={{
@@ -58,7 +70,7 @@ export default function PostCard({ post, dispatch }) {
         🗑 Supprimer
       </button>
 
-      {/* Section commentaires */}
+      {/* Commentaires */}
       <CommentSection post={post} dispatch={dispatch} />
     </div>
   );
